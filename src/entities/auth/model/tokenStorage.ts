@@ -8,6 +8,15 @@ type StoredAuth = StoredAuthPayload | null;
 
 const isBrowser = typeof window !== "undefined" && typeof window.localStorage !== "undefined";
 
+const hasSnapshotRequiredFields = (state: AuthState): boolean =>
+  Boolean(
+    state.user &&
+    state.token &&
+    state.refreshToken &&
+    state.tokenExpiresAt &&
+    state.refreshTokenExpiresAt
+  );
+
 export const loadStoredAuth = (): StoredAuth => {
   if (!isBrowser) {
     return null;
@@ -41,13 +50,7 @@ export const clearStoredAuth = () => {
 };
 
 export const snapshotAuthState = (state: AuthState): StoredAuthPayload | null => {
-  if (
-    !state.user ||
-    !state.token ||
-    !state.refreshToken ||
-    !state.tokenExpiresAt ||
-    !state.refreshTokenExpiresAt
-  ) {
+  if (!hasSnapshotRequiredFields(state)) {
     return null;
   }
 
