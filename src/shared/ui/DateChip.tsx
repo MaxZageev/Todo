@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import Chip from "@mui/material/Chip";
+import { Chip } from "@mui/material";
 
 import parseISODate from "@/shared/lib/date/dateParser";
 

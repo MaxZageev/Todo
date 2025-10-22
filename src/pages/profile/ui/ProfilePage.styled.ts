@@ -1,8 +1,5 @@
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
+import { Box, Button, Paper, Stack } from "@mui/material";
 
 export const PageContainer = styled(Box)(({ theme }) => ({
   minHeight: "100vh",

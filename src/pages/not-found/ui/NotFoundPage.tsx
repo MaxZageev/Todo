@@ -1,5 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { Stack, Typography } from "@mui/material";
 
 import ThemeToggleButton from "@/shared/ui/ThemeToggleButton";
 
@@ -14,4 +13,3 @@ const NotFoundPage = () => (
 );
 
 export default NotFoundPage;
-

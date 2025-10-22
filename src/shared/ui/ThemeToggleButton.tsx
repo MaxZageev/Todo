@@ -1,7 +1,6 @@
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
+import { IconButton, Tooltip } from "@mui/material";
 
 import { useColorMode } from "@/shared/config/theme/ui/ThemeProvider";
 

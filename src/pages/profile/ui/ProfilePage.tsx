@@ -1,13 +1,7 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import LinearProgress from "@mui/material/LinearProgress";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Alert, Button, Divider, LinearProgress, Stack, TextField, Typography } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useAppDispatch, useAppSelector } from "@/app/providers/storeHooks";
@@ -207,4 +201,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-

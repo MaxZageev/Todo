@@ -1,17 +1,12 @@
-
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 
 import { Divider, Tooltip } from "@mui/material";
 
-import AddTodo from "@/features/todo/add-todo/ui/AddTodo";
-import TodoList from "@/features/todo/todo-list/ui/TodoList";
-import FilterSort from "@/features/todo/filter-sort/ui/FilterSort";
-import PaginationControls from "@/features/todo/pagination/ui/PaginationControls";
 import { useAppSelector } from "@/app/providers/storeHooks";
 import { LIMIT_OPTIONS } from "@/entities/todo/model/constants";
-import { useTodos } from "@/features/todo/manage";
+import { AddTodo, FilterSort, PaginationControls, TodoList, useTodos } from "@/features/todo";
 import * as S from "./TodoPage.styled";
 
 const TodoPage: React.FC = () => {

@@ -1,19 +1,14 @@
 import { FormEvent, useEffect, useState } from "react";
 import { NavLink, useNavigate, useLocation, type Location } from "react-router-dom";
 
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
+import { Alert, Button, Stack, TextField, Typography } from "@mui/material";
 
 import ThemeToggleButton from "@/shared/ui/ThemeToggleButton";
 import { useAppDispatch, useAppSelector } from "@/app/providers/storeHooks";
 import { loginUser, clearAuthError } from "@/entities/auth/model/authSlice";
 import useAppConfig from "@/shared/config/app-config/lib/useAppConfig";
+import EMAIL_PATTERN from "@/pages/auth/constants";
 import * as S from "./LoginForm.styled";
-
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const LoginForm = () => {
   const dispatch = useAppDispatch();
@@ -43,7 +38,7 @@ const LoginForm = () => {
   }, [token, navigate, location.state]);
 
   const validate = () => {
-    if (!emailPattern.test(email)) {
+    if (!EMAIL_PATTERN.test(email)) {
       setFormError("Введите корректный email");
       return false;
     }

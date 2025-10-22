@@ -17,7 +17,7 @@ import {
   useTheme,
   useMediaQuery
 } from "@mui/material";
-import type { SelectChangeEvent } from "@mui/material/Select";
+import type { SelectChangeEvent } from "@mui/material";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useTranslation } from "react-i18next";

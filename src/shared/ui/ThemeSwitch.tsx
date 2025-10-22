@@ -4,8 +4,7 @@
  */
 import React from "react";
 import { styled } from "@mui/material/styles";
-import Switch from "@mui/material/Switch";
-import type { SwitchProps } from "@mui/material/Switch";
+import { Switch, type SwitchProps } from "@mui/material";
 
 type ThemeSwitchProps = {
   checked: boolean;

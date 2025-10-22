@@ -9,17 +9,18 @@ import {
 import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
 import { useTranslation } from "react-i18next";
 
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
+import { Box, Container } from "@mui/material";
 
 import { useAppDispatch, useAppSelector } from "@/app/providers/storeHooks";
 import ProtectedRoute from "@/features/auth/protected-route/ui/ProtectedRoute";
-import LoginForm from "@/pages/auth/ui/LoginForm";
-import InfoPage from "@/pages/home/ui/InfoPage";
-import NotFoundPage from "@/pages/not-found/ui/NotFoundPage";
-import ProfilePage from "@/pages/profile/ui/ProfilePage";
-import RegisterForm from "@/pages/auth/ui/RegisterForm";
-import TodoPage from "@/pages/todo/ui/TodoPage";
+import {
+  InfoPage,
+  LoginForm,
+  NotFoundPage,
+  ProfilePage,
+  RegisterForm,
+  TodoPage
+} from "@/pages";
 import useAppConfig from "@/shared/config/app-config/lib/useAppConfig";
 import ErrorFallback from "@/shared/ui/ErrorFallback";
 import { fetchUserProfile } from "@/entities/auth/model/authSlice";
