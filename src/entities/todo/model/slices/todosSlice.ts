@@ -15,13 +15,13 @@ import type { PaginatedTodos } from "@/entities/todo/model/types/api";
 import type { AuthState } from "@/entities/auth/model/types";
 import { ensureAuthSession, handleAuthError } from "@/entities/auth/model/sessionGuard";
 
-const ERROR_FALLBACKS = {
-  fetch: "FETCH_FAILED",
-  create: "CREATE_FAILED",
-  update: "UPDATE_FAILED",
-  remove: "REMOVE_FAILED",
-  toggle: "TOGGLE_FAILED"
-} as const;
+enum TodoErrorFallback {
+  Fetch = "FETCH_FAILED",
+  Create = "CREATE_FAILED",
+  Update = "UPDATE_FAILED",
+  Remove = "REMOVE_FAILED",
+  Toggle = "TOGGLE_FAILED"
+}
 
 type FetchArgs = {
   baseURL: string;
@@ -54,7 +54,7 @@ export const fetchTodos = createAsyncThunk<PaginatedTodos, FetchArgs, TodosThunk
     try {
       return await fetchTodosApi(baseURL, { page, limit, filter, sort });
     } catch (error) {
-      const message = await handleAuthError(error, ERROR_FALLBACKS.fetch, thunkAPI.dispatch);
+      const message = await handleAuthError(error, TodoErrorFallback.Fetch, thunkAPI.dispatch);
       return thunkAPI.rejectWithValue(message);
     }
   }
@@ -79,7 +79,7 @@ export const addTodo = createAsyncThunk<
     const todo = await createTodoApi(baseURL, text);
     return todo;
   } catch (error) {
-    const message = await handleAuthError(error, ERROR_FALLBACKS.create, thunkAPI.dispatch);
+    const message = await handleAuthError(error, TodoErrorFallback.Create, thunkAPI.dispatch);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -103,7 +103,7 @@ export const editTodo = createAsyncThunk<
     const todo = await updateTodoApi(baseURL, id, { text });
     return todo;
   } catch (error) {
-    const message = await handleAuthError(error, ERROR_FALLBACKS.update, thunkAPI.dispatch);
+    const message = await handleAuthError(error, TodoErrorFallback.Update, thunkAPI.dispatch);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -127,7 +127,7 @@ export const removeTodo = createAsyncThunk<
     await deleteTodoApi(baseURL, id);
     return id;
   } catch (error) {
-    const message = await handleAuthError(error, ERROR_FALLBACKS.remove, thunkAPI.dispatch);
+    const message = await handleAuthError(error, TodoErrorFallback.Remove, thunkAPI.dispatch);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -151,7 +151,7 @@ export const toggleTodo = createAsyncThunk<
     const todo = await toggleTodoApi(baseURL, id);
     return todo;
   } catch (error) {
-    const message = await handleAuthError(error, ERROR_FALLBACKS.toggle, thunkAPI.dispatch);
+    const message = await handleAuthError(error, TodoErrorFallback.Toggle, thunkAPI.dispatch);
     return thunkAPI.rejectWithValue(message);
   }
 });
@@ -177,35 +177,35 @@ const todosSlice = createSlice({
       })
       .addCase(fetchTodos.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload ?? action.error?.message ?? ERROR_FALLBACKS.fetch;
+        state.error = action.payload ?? action.error?.message ?? TodoErrorFallback.Fetch;
       })
       .addCase(addTodo.fulfilled, (state, action) => {
         todosAdapter.addOne(state, action.payload);
         state.error = null;
       })
       .addCase(addTodo.rejected, (state, action) => {
-        state.error = action.payload ?? action.error?.message ?? ERROR_FALLBACKS.create;
+        state.error = action.payload ?? action.error?.message ?? TodoErrorFallback.Create;
       })
       .addCase(editTodo.fulfilled, (state, action) => {
         todosAdapter.upsertOne(state, action.payload);
         state.error = null;
       })
       .addCase(editTodo.rejected, (state, action) => {
-        state.error = action.payload ?? action.error?.message ?? ERROR_FALLBACKS.update;
+        state.error = action.payload ?? action.error?.message ?? TodoErrorFallback.Update;
       })
       .addCase(removeTodo.fulfilled, (state, action) => {
         todosAdapter.removeOne(state, action.payload);
         state.error = null;
       })
       .addCase(removeTodo.rejected, (state, action) => {
-        state.error = action.payload ?? action.error?.message ?? ERROR_FALLBACKS.remove;
+        state.error = action.payload ?? action.error?.message ?? TodoErrorFallback.Remove;
       })
       .addCase(toggleTodo.fulfilled, (state, action) => {
         todosAdapter.upsertOne(state, action.payload);
         state.error = null;
       })
       .addCase(toggleTodo.rejected, (state, action) => {
-        state.error = action.payload ?? action.error?.message ?? ERROR_FALLBACKS.toggle;
+        state.error = action.payload ?? action.error?.message ?? TodoErrorFallback.Toggle;
       });
   }
 });
