@@ -1,0 +1,17 @@
+node_modules
+.npmrc
+build
+dist
+.vscode
+.idea
+/coverage
+/results
+yalc.lock
+.yalc
+.DS_Store
+eslint.xml
+junit.xml
+*.local
+/config.json*
+/config/config.json*
+.env.docker

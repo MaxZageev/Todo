@@ -1,0 +1,126 @@
+{
+  "example-app-language-loading": "Загружаю язык...",
+  "example-app-config-loading": "Загружаю настройки...",
+  "example-app": {
+    "unknown-error-title": "Неизвестная ошибка"
+  },
+  "features": {
+    "add-todo": {
+      "error-empty": "Нужно ввести текст задачи",
+      "label": "Новая задача",
+      "placeholder": "Введите текст задачи",
+      "aria": "Добавить задачу",
+      "submit": "Добавить"
+    },
+    "filter-sort": {
+      "sort": {
+        "title": {
+          "newFirst": "Сначала новые",
+          "oldFirst": "Сначала старые"
+        },
+        "aria": {
+          "newFirst": "Показывать сначала новые задачи",
+          "oldFirst": "Показывать сначала старые задачи"
+        }
+      },
+      "theme": {
+        "dark": "Тёмная тема",
+        "light": "Светлая тема"
+      },
+      "filter-label": "Фильтр",
+      "filters": {
+        "all": "Все",
+        "completed": "Выполненные",
+        "active": "Активные"
+      }
+    },
+    "pagination": {
+      "range": {
+        "empty": "Нет записей",
+        "unknown": "{{from}}–{{to}} из ?",
+        "default_one": "{{from}}–{{to}} из {{count}} задачи",
+        "default_few": "{{from}}–{{to}} из {{count}} задач",
+        "default_many": "{{from}}–{{to}} из {{count}} задач",
+        "default_other": "{{from}}–{{to}} из {{count}} задач"
+      },
+      "rows-per-page": "Задач на странице",
+      "modal-limit": "Количество задач",
+      "aria": {
+        "prev": "Предыдущая страница",
+        "next": "Следующая страница"
+      }
+    },
+    "todo-item": {
+      "actions": {
+        "save": "Сохранить",
+        "delete": "Удалить",
+        "cancel": "Отменить",
+        "edit": "Редактировать"
+      },
+      "checkbox": {
+        "incomplete": "Отметить задачу как выполненную",
+        "complete": "Отменить выполнение задачи"
+      },
+      "expand": {
+        "hide": "Свернуть",
+        "show": "Показать полностью"
+      }
+    },
+    "todo-list": {
+      "empty": "Пока ничего нет. Добавьте первую задачу!"
+    }
+  },
+  "app-info": {
+    "date-error-title": "Ошибка чтения даты",
+    "api": {
+      "latency": "API ответило за {{latency}} мс",
+      "latency-unknown": "API ответило, но время неизвестно",
+      "offline": "API недоступно",
+      "via": "Запрос через {{url}}",
+      "no-url": "URL API не определён"
+    },
+    "chips": {
+      "mode": "Режим: {{mode}}",
+      "language": "Язык: {{lang}}",
+      "device": "Устройство: {{platform}}",
+      "mobile": "Мобильное устройство: {{value}}"
+    },
+    "title": "Информация о приложении",
+    "sections": {
+      "build": "Сборка",
+      "runtime-config": "Конфигурация в рантайме",
+      "api-status": "Состояние API",
+      "environment": "Среда",
+      "contacts": "Контакты"
+    },
+    "build": {
+      "version": "Версия: {{version}}",
+      "commit": "Коммит: {{hash}}"
+    },
+    "contacts": {
+      "max": "Максим",
+      "sacha": "Саша"
+    },
+    "buttons": {
+      "open-todo": "К задачам",
+      "reload": "Обновить страницу"
+    },
+    "theme": {
+      "label": "Переключить тему"
+    }
+  },
+  "todo-page": {
+    "account-chip": "Профиль",
+    "account-tooltip": "Открыть профиль",
+    "title": "Todo App"
+  },
+  "shared": {
+    "app-config": {
+      "missing": "Конфигурация приложения не загружена"
+    }
+  },
+  "app-error-fallback": {
+    "tooltip-title": "Подробнее об ошибке",
+    "btn-close": "Закрыть"
+  }
+}

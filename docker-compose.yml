@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  frontend:
+    image: vodichkapuzirki/mf:latest
+    container_name: frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - ./.docker/example_config.json:/usr/share/nginx/html/config.json:ro
+      - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./.docker/locations.conf:/etc/nginx/conf.d/locations.conf:ro
+    environment:
+      LANG: "ru_RU.UTF-8"
+      TZ: "Europe/Moscow"
+    restart: unless-stopped

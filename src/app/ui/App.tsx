@@ -1,0 +1,97 @@
+import { useEffect } from "react";
+import {
+  Navigate,
+  Outlet,
+  Route,
+  Routes,
+  useLocation
+} from "react-router-dom";
+import { ErrorBoundary, type FallbackProps } from "react-error-boundary";
+import { useTranslation } from "react-i18next";
+
+import { Box, Container } from "@mui/material";
+
+import { useAppDispatch, useAppSelector } from "@/app/providers/storeHooks";
+import ProtectedRoute from "@/features/auth/protected-route/ui/ProtectedRoute";
+import {
+  InfoPage,
+  LoginForm,
+  NotFoundPage,
+  ProfilePage,
+  RegisterForm,
+  TodoPage
+} from "@/pages";
+import useAppConfig from "@/shared/config/app-config/lib/useAppConfig";
+import ErrorFallback from "@/shared/ui/ErrorFallback";
+import { fetchUserProfile } from "@/entities/auth/model/authSlice";
+import {
+  authenticatedLayoutSx,
+  errorFallbackContainerSx,
+  unauthenticatedLayoutSx
+} from "./App.styles";
+
+const AppLayout = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
+  if (!isAuthenticated) {
+    return (
+      <Box component="main" sx={unauthenticatedLayoutSx}>
+        <Container maxWidth="sm">
+          <Outlet />
+        </Container>
+      </Box>
+    );
+  }
+
+  return (
+    <Box component="main" sx={authenticatedLayoutSx}>
+      <Container maxWidth="lg">
+        <Outlet />
+      </Container>
+    </Box>
+  );
+};
+
+const App = () => {
+  const location = useLocation();
+  const { t } = useTranslation(undefined, { keyPrefix: "example-app" });
+  const dispatch = useAppDispatch();
+  const appConfig = useAppConfig();
+  const { token, user, profileStatus } = useAppSelector((state) => ({
+    token: state.auth.token,
+    user: state.auth.user,
+    profileStatus: state.auth.profileStatus
+  }));
+  const isAuthenticated = Boolean(token);
+  const baseURL = appConfig?.TODO_API_URL ?? "";
+
+  useEffect(() => {
+    if (isAuthenticated && baseURL && !user && profileStatus === "idle") {
+      dispatch(fetchUserProfile({ baseURL }));
+    }
+  }, [isAuthenticated, baseURL, user, profileStatus, dispatch]);
+
+  const renderAppError = ({ error }: FallbackProps) => (
+    <Box sx={errorFallbackContainerSx}>
+      <ErrorFallback error={error} title={t("unknown-error-title", "Unknown error")} />
+    </Box>
+  );
+
+  return (
+    <ErrorBoundary resetKeys={[location.key]} fallbackRender={renderAppError}>
+      <Routes>
+        <Route element={<AppLayout isAuthenticated={isAuthenticated} />}>
+          <Route element={<ProtectedRoute />}>
+            <Route index element={<TodoPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+            <Route path="todo" element={<TodoPage />} />
+          </Route>
+          <Route path="info" element={<InfoPage />} />
+          <Route path="login" element={isAuthenticated ? <Navigate to="/" replace /> : <LoginForm />} />
+          <Route path="register" element={isAuthenticated ? <Navigate to="/" replace /> : <RegisterForm />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </ErrorBoundary>
+  );
+};
+
+export default App;
