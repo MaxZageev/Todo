@@ -1,0 +1,120 @@
+import { FormEvent, useEffect, useState } from "react";
+import { NavLink, useNavigate, useLocation, type Location } from "react-router-dom";
+
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+
+import ThemeToggleButton from "@/shared/ui/ThemeToggleButton";
+import { useAppDispatch, useAppSelector } from "@/app/providers/storeHooks";
+import { loginUser, clearAuthError } from "@/entities/auth/model/authSlice";
+import useAppConfig from "@/shared/config/app-config/lib/useAppConfig";
+import * as S from "./LoginForm.styled";
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const LoginForm = () => {
+  const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { status, error, token } = useAppSelector((state) => ({
+    status: state.auth.status,
+    error: state.auth.error,
+    token: state.auth.token
+  }));
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [formError, setFormError] = useState<string | null>(null);
+  const appConfig = useAppConfig();
+  const baseURL = appConfig?.TODO_API_URL ?? "";
+  const isSubmitting = status === "loading";
+
+  useEffect(() => {
+    dispatch(clearAuthError());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (token) {
+      const state = location.state as { from?: Location } | undefined;
+      navigate(state?.from?.pathname ?? "/", { replace: true });
+    }
+  }, [token, navigate, location.state]);
+
+  const validate = () => {
+    if (!emailPattern.test(email)) {
+      setFormError("Введите корректный email");
+      return false;
+    }
+    if (password.length < 6) {
+      setFormError("Пароль должен содержать не менее 6 символов");
+      return false;
+    }
+    if (!baseURL) {
+      setFormError("Адрес API не настроен");
+      return false;
+    }
+    setFormError(null);
+    return true;
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!validate()) {
+      return;
+    }
+
+    dispatch(loginUser({ baseURL, email, password }));
+  };
+
+  return (
+    <S.PageContainer>
+      <S.FormWrapper onSubmit={handleSubmit}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between">
+          <Typography variant="h4" fontWeight={700}>
+            Вход
+          </Typography>
+          <ThemeToggleButton size="small" />
+        </Stack>
+
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+          autoComplete="email"
+          disabled={isSubmitting}
+        />
+        <TextField
+          label="Пароль"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          required
+          autoComplete="current-password"
+          disabled={isSubmitting}
+          inputProps={{ minLength: 6 }}
+        />
+
+        {(formError || error) && <Alert severity="error">{formError ?? error}</Alert>}
+
+        <Button type="submit" variant="contained" disabled={isSubmitting} size="large">
+          {isSubmitting ? "Входим..." : "Войти"}
+        </Button>
+
+        <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
+          <Typography variant="body2" color="text.secondary">
+            Нет аккаунта?
+          </Typography>
+          <Button component={NavLink} to="/register" variant="contained" size="small">
+            Зарегистрируйтесь
+          </Button>
+        </Stack>
+      </S.FormWrapper>
+    </S.PageContainer>
+  );
+};
+
+export default LoginForm;

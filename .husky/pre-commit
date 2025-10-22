@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -e
+
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run lint
+npm run check-types
+npm run i18next -- -s --fail-on-update --fail-on-warnings

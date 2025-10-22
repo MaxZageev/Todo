@@ -1,0 +1,19 @@
+{# OUTPUT = config/config.json -#}
+{
+{% for key, prop in schema.definitions.AppConfigData.properties -%}
+{% if prop.type == "object" or prop.type == "array" or not prop.type -%}
+{% if env.NODE_ENV == "development" -%}
+{{'  '}}"{{key}}": {{  (prop.examples[0] or prop.default) | expandEnv | dump(2) | safe | indent(2)  }}
+{&- else -%}
+{{'  '}}"{{key}}": {{  prop.default | expandEnv | dump(2) | safe | indent(2)  }}
+{%- endif -%}
+{%- else -%}
+{% if env.NODE_ENV == "development" -%}
+{{'  '}}"{{key}}": {{  (prop.examples[0] or prop.default) | expandEnv | dump | safe  }}
+{%- else -%}
+{{'  '}}"{{key}}": {{  prop.default | expandEnv | dump | safe  }}
+{%- endif -%}
+{%- endif -%}
+{%- if not loop.last %},{% endif %}
+{% endfor -%}
+}
