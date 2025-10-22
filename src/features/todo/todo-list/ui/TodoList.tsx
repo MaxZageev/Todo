@@ -6,9 +6,6 @@ import TodoItem from "./TodoItem";
 import type { TodoListProps } from "@/entities/todo/model/types/components";
 import { emptyStateSx, listSx } from "./TodoList.styles";
 
-/**
- * Список задач. Если элементы отсутствуют, выводит подсказку для пользователя.
- */
 const TodoList: React.FC<TodoListProps> = ({ items, onToggle, onDelete, onEdit }) => {
   const { t } = useTranslation(undefined, { keyPrefix: "features.todo-list" });
 

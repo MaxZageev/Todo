@@ -32,7 +32,6 @@ import {
   listItemSx
 } from "./TodoItem.styles";
 
-// Максимальная высота превью, после которой показывается ссылка «Развернуть»
 const MAX_PREVIEW_HEIGHT = 25;
 
 const TodoItem: React.FC<TodoItemProps> = ({
@@ -45,7 +44,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
   onEdit
 }) => {
   const { t } = useTranslation(undefined, { keyPrefix: "features.todo-item" });
-  // Хук управляет режимами редактирования, расхлопыванием и черновиком текста
   const {
     editing,
     draft,
@@ -61,7 +59,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // На мобильном по нажатию на текст сразу переключаемся в режим редактирования
   const handlePrimaryClick = () => {
     if (!editing && isMobile) {
       startEdit();
@@ -70,9 +67,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
 
   const actionBoxSx = getActionBoxSx({ isMobile, editing });
 
-  /**
-   * Вспомогательная функция рендерит набор кнопок для текущего режима.
-   */
   const renderActions = () => {
     if (editing) {
       return (
@@ -114,7 +108,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
       alignItems="flex-start"
       sx={listItemSx}
     >
-      {/* Чекбокс переключает статус выполнения */}
       <Checkbox
         checked={completed}
         onChange={() => onToggle(id)}
@@ -125,7 +118,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
       <Box sx={contentContainerSx}>
         {!editing ? (
           <>
-            {/* Основной текст задачи. На мобильных тап запускает редактирование */}
             <ListItemText
               primary={
                 <Typography
@@ -148,7 +140,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
               }).format(createdAt)}
             />
 
-            {/* Ссылка «Развернуть/Свернуть» появляется только у длинных текстов */}
             {text.length > 120 && (
               <Typography
                 variant="body2"
@@ -161,7 +152,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
             )}
           </>
         ) : (
-          // Поле редактирования текста задачи
           <TextField
             value={draft}
             onChange={(event) => setDraft(event.target.value)}

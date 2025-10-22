@@ -1,8 +1,5 @@
 import "styled-components";
 
-/**
- * Расширение типизации styled-components, чтобы знать цвета и текущий режим.
- */
 declare module "styled-components" {
   export interface DefaultTheme {
     mode: "light" | "dark";

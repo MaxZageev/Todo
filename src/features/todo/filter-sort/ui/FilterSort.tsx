@@ -1,7 +1,3 @@
-/**
- * Панель фильтрации и сортировки: выбирает фильтр, направление сортировки и позволяет
- * переключать тему интерфейса.
- */
 import React from "react";
 import { useTranslation } from "react-i18next";
 
@@ -21,7 +17,7 @@ import { useColorMode } from "@/shared/config/theme/ui/ThemeProvider";
 import ThemeSwitch from "@/shared/ui/ThemeSwitch";
 import type { FilterSortProps } from "@/entities/todo/model/types/components";
 import { useFilterSortHandlers } from "@/features/todo/filter-sort/model/useFilterSortHandlers";
-import { FILTER_LABEL_ID } from "@/entities/todo/model/constants/filterSort";
+import FILTER_LABEL_ID from "@/entities/todo/model/constants/filterSort";
 import {
   containerSx,
   filterControlSx,

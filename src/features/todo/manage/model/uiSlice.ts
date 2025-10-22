@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 import { DEFAULT_FILTER, DEFAULT_LIMIT, DEFAULT_PAGE, DEFAULT_SORT } from "@/entities/todo/model/constants";

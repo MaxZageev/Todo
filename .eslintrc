@@ -33,7 +33,14 @@
     "no-var": "off",
     "camelcase": "off",
     "prefer-template": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state", "draft", "acc"]
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

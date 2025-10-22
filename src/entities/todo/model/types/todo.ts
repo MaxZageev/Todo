@@ -1,11 +1,9 @@
-/**
- * Базовый тип задачи, используемый в клиентском приложении.
- */
+
 export interface Todo {
-  id: string; // строковый идентификатор, удобный для key в React
-  text: string; // описание задачи
-  completed: boolean; // признак выполнения
-  createdAt: Date; // время создания
+  id: string; 
+  text: string; 
+  completed: boolean; 
+  createdAt: Date; 
 }
 
 export type Filter = "all" | "completed" | "active";

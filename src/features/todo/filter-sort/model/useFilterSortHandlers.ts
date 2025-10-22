@@ -10,10 +10,9 @@ export default function useFilterSortHandlers(
   sort: SortOrder,
   onChangeSort: (s: SortOrder) => void
 ) {
-  // Обновляем фильтр на основе выбранного значения выпадающего списка
+ 
   const handleFilter = (event: SelectChangeEvent) => onChangeFilter(event.target.value as Filter);
 
-  // Переключаем порядок сортировки между новыми и старыми задачами
   const toggleSort = () => onChangeSort(sort === "newFirst" ? "oldFirst" : "newFirst");
 
   return { handleFilter, toggleSort };

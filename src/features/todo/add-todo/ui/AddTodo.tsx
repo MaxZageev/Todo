@@ -1,7 +1,3 @@
-/**
- * Поле добавления новой задачи. Валидация и состояние находятся в хуке
- * useAddTodoForm, здесь только отображение и доступность для клавиатуры.
- */
 import React from "react";
 import { useTranslation } from "react-i18next";
 
