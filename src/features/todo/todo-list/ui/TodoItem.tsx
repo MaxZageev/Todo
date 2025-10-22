@@ -23,6 +23,14 @@ import SaveIcon from "@mui/icons-material/Save";
 import CloseIcon from "@mui/icons-material/Close";
 import type { TodoItemProps } from "@/entities/todo/model/types/components";
 import { useTodoItem } from "@/features/todo/todo-list/model/useTodoItem";
+import {
+  checkboxSx,
+  contentContainerSx,
+  expandToggleSx,
+  getActionBoxSx,
+  getPrimaryTextSx,
+  listItemSx
+} from "./TodoItem.styles";
 
 // Максимальная высота превью, после которой показывается ссылка «Развернуть»
 const MAX_PREVIEW_HEIGHT = 25;
@@ -60,12 +68,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
     }
   };
 
-  const actionBoxSx = {
-    mt: { xs: 0.25, sm: 0 },
-    alignSelf: { xs: "flex-start", sm: "flex-start" },
-    ml: { xs: "auto", sm: 0 },
-    ...(isMobile && !editing ? { display: "none" } : {})
-  } as const;
+  const actionBoxSx = getActionBoxSx({ isMobile, editing });
 
   /**
    * Вспомогательная функция рендерит набор кнопок для текущего режима.
@@ -109,28 +112,17 @@ const TodoItem: React.FC<TodoItemProps> = ({
   return (
     <ListItem
       alignItems="flex-start"
-      sx={{
-        bgcolor: "background.paper",
-        borderRadius: { xs: 0.75, sm: 1 },
-        mb: { xs: 0.75, sm: 1 },
-        border: (muiTheme) => `1px solid ${muiTheme.palette.divider}`,
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        flexWrap: { xs: "wrap", sm: "nowrap" },
-        columnGap: { xs: 0.75, sm: 0 },
-        rowGap: { xs: 0.5, sm: 0 }
-      }}
+      sx={listItemSx}
     >
       {/* Чекбокс переключает статус выполнения */}
       <Checkbox
         checked={completed}
         onChange={() => onToggle(id)}
-        sx={{ mt: { xs: 0, sm: 0.5 }, alignSelf: "flex-start" }}
+        sx={checkboxSx}
         inputProps={{ "aria-label": completed ? t("checkbox.incomplete") : t("checkbox.complete") }}
       />
 
-      <Box sx={{ flex: 1, mr: { xs: 0, sm: 1 }, width: "100%" }}>
+      <Box sx={contentContainerSx}>
         {!editing ? (
           <>
             {/* Основной текст задачи. На мобильных тап запускает редактирование */}
@@ -139,17 +131,13 @@ const TodoItem: React.FC<TodoItemProps> = ({
                 <Typography
                   component="span"
                   onClick={handlePrimaryClick}
-                  sx={{
-                    whiteSpace: "pre-wrap",
-                    wordBreak: "break-word",
-                    maxHeight: expanded ? "none" : MAX_PREVIEW_HEIGHT,
-                    overflow: "hidden",
-                    textDecoration: completed ? "line-through" : "none",
-                    opacity: completed ? 0.7 : 1,
-                    display: "block",
-                    fontSize: { xs: "0.9rem", sm: "1rem" },
-                    cursor: !editing && isMobile ? "text" : "default"
-                  }}
+                  sx={getPrimaryTextSx({
+                    expanded,
+                    completed,
+                    editing,
+                    isMobile,
+                    maxPreviewHeight: MAX_PREVIEW_HEIGHT
+                  })}
                 >
                   {text}
                 </Typography>
@@ -165,7 +153,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
               <Typography
                 variant="body2"
                 color="primary"
-                sx={{ cursor: "pointer", mt: 0.5 }}
+                sx={expandToggleSx}
                 onClick={toggleExpanded}
               >
                 {expanded ? t("expand.hide") : t("expand.show")}

@@ -22,19 +22,24 @@ import ThemeSwitch from "@/shared/ui/ThemeSwitch";
 import type { FilterSortProps } from "@/entities/todo/model/types/components";
 import { useFilterSortHandlers } from "@/features/todo/filter-sort/model/useFilterSortHandlers";
 import { FILTER_LABEL_ID } from "@/entities/todo/model/constants/filterSort";
+import {
+  containerSx,
+  filterControlSx,
+  sortButtonLabelSx,
+  sortButtonSx,
+  themeToggleLabelSx
+} from "./FilterSort.styles";
 
 const FilterSort: React.FC<FilterSortProps> = ({ filter, sort, onChangeFilter, onChangeSort }) => {
   const { t } = useTranslation(undefined, { keyPrefix: "features.filter-sort" });
   const { mode, toggle } = useColorMode();
   const { handleFilter, toggleSort } = useFilterSortHandlers(onChangeFilter, sort, onChangeSort);
 
-  const sortTitle = sort === "newFirst"
-  ? t("sort.title.newFirst")
-  : t("sort.title.oldFirst");
+  const sortTitle =
+    sort === "newFirst" ? t("sort.title.newFirst") : t("sort.title.oldFirst");
 
-const sortAria = sort === "newFirst"
-  ? t("sort.aria.newFirst")
-  : t("sort.aria.oldFirst");
+  const sortAria =
+    sort === "newFirst" ? t("sort.aria.newFirst") : t("sort.aria.oldFirst");
 
   const themeLabel = mode === "dark" ? t("theme.dark") : t("theme.light");
 
@@ -43,18 +48,11 @@ const sortAria = sort === "newFirst"
       direction="row"
       spacing={{ xs: 1, sm: 2 }}
       alignItems="center"
-      sx={{
-        width: "100%",
-        flexWrap: { xs: "wrap", sm: "nowrap" },
-        rowGap: { xs: 0.75, sm: 0 }
-      }}
+      sx={containerSx}
     >
       <FormControl
         size="small"
-        sx={{
-          flex: { xs: 1, sm: "0 0 auto" },
-          minWidth: { xs: 0, sm: 160 }
-        }}
+        sx={filterControlSx}
       >
         <InputLabel id={FILTER_LABEL_ID}>{t("filter-label")}</InputLabel>
         <Select labelId={FILTER_LABEL_ID} label={t("filter-label")} value={filter} onChange={handleFilter}>
@@ -70,22 +68,9 @@ const sortAria = sort === "newFirst"
         size="small"
         onClick={toggleSort}
         endIcon={sort === "newFirst" ? <ArrowDownwardIcon /> : <ArrowUpwardIcon />}
-        sx={{
-          minWidth: { xs: 40, sm: 190 },
-          height: { xs: 36, sm: 40 },
-          px: { xs: 0, sm: 2 },
-          borderRadius: { xs: 12, sm: 1.25 },
-          textTransform: "none",
-          fontSize: "0.95rem",
-          fontWeight: 600,
-          color: "var(--text)",
-          justifyContent: { xs: "center", sm: "space-between" },
-          "& .MuiButton-endIcon": {
-            ml: { xs: 0, sm: 1 }
-          }
-        }}
+        sx={sortButtonSx}
       >
-        <Box component="span" sx={{ display: { xs: "none", sm: "inline" } }}>
+        <Box component="span" sx={sortButtonLabelSx}>
           {sortTitle}
         </Box>
       </Button>
@@ -93,12 +78,7 @@ const sortAria = sort === "newFirst"
       <FormControlLabel
         control={<ThemeSwitch checked={mode === "dark"} onChange={toggle} />}
         label={themeLabel}
-        sx={{
-          m: { xs: 0.5, sm: 0 },
-          alignSelf: "flex-end",
-          flexShrink: 0,
-          paddingLeft: { xs: 0, sm: 1.25 }
-        }}
+        sx={themeToggleLabelSx}
       />
     </Stack>
   );

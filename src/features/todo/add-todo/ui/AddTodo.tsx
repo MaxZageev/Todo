@@ -9,6 +9,7 @@ import { Box, TextField, IconButton, Button, useTheme, useMediaQuery } from "@mu
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import type { AddTodoProps } from "@/entities/todo/model/types/components";
 import { useAddTodoForm } from "@/features/todo/add-todo/model/useAddTodoForm";
+import { formSx, getTextFieldSx, submitButtonSx } from "./AddTodo.styles";
 
 const AddTodo: React.FC<AddTodoProps> = ({ onAdd }) => {
   const { t } = useTranslation(undefined, { keyPrefix: "features.add-todo" });
@@ -24,31 +25,10 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAdd }) => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        width: "100%",
-        display: "flex",
-        flexDirection: { xs: "column", sm: "row" },
-        alignItems: { xs: "stretch", sm: "stretch" },
-        gap: { xs: 0, sm: 1 }
-      }}
-    >
+    <Box component="form" onSubmit={handleSubmit} sx={formSx}>
       <TextField
         fullWidth
-        sx={{
-          flex: 1,
-          minWidth: { xs: "100%", sm: 320 },
-          "& .MuiOutlinedInput-root": {
-            height: { xs: 50, sm: 56 },
-            borderRadius: { xs: 1.75, sm: 1.25 }
-          },
-          "& .MuiOutlinedInput-input": {
-            py: 0,
-            ...(isMobile ? { pr: { xs: 5.5, sm: 6 } } : {})
-          }
-        }}
+        sx={getTextFieldSx(isMobile)}
         value={text}
         onChange={(e) => handleChange(e.target.value)}
         label={t("label")}
@@ -81,13 +61,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAdd }) => {
           variant="contained"
           type="submit"
           endIcon={<AddBoxIcon />}
-          sx={{
-            ml: { xs: 0, sm: 1 },
-            alignSelf: "stretch",
-            minWidth: 132,
-            height: 56,
-            borderRadius: { xs: 1.75, sm: 1.25 }
-          }}
+          sx={submitButtonSx}
           disabled={!trimmed}
         >
           {t("submit")}

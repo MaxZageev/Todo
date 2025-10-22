@@ -23,21 +23,16 @@ import TodoPage from "@/pages/todo/ui/TodoPage";
 import useAppConfig from "@/shared/config/app-config/lib/useAppConfig";
 import ErrorFallback from "@/shared/ui/ErrorFallback";
 import { fetchUserProfile } from "@/entities/auth/model/authSlice";
+import {
+  authenticatedLayoutSx,
+  errorFallbackContainerSx,
+  unauthenticatedLayoutSx
+} from "./App.styles";
 
 const AppLayout = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   if (!isAuthenticated) {
     return (
-      <Box
-        component="main"
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          py: 6,
-          px: 2
-        }}
-      >
+      <Box component="main" sx={unauthenticatedLayoutSx}>
         <Container maxWidth="sm">
           <Outlet />
         </Container>
@@ -46,13 +41,7 @@ const AppLayout = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
   }
 
   return (
-    <Box
-      component="main"
-      sx={{
-        minHeight: "100vh",
-        py: 0
-      }}
-    >
+    <Box component="main" sx={authenticatedLayoutSx}>
       <Container maxWidth="lg">
         <Outlet />
       </Container>
@@ -80,15 +69,7 @@ const App = () => {
   }, [isAuthenticated, baseURL, user, profileStatus, dispatch]);
 
   const renderAppError = ({ error }: FallbackProps) => (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        width: "100%"
-      }}
-    >
+    <Box sx={errorFallbackContainerSx}>
       <ErrorFallback error={error} title={t("unknown-error-title", "Unknown error")} />
     </Box>
   );

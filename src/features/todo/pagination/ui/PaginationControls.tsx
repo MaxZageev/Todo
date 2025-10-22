@@ -22,6 +22,12 @@ import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { useTranslation } from "react-i18next";
 import type { PaginationControlsProps } from "@/entities/todo/model/types/components";
+import {
+  desktopContainerSx,
+  emphasizedCaptionSx,
+  mobileContainerSx,
+  mobileLimitControlSx
+} from "./PaginationControls.styles";
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
   page,
@@ -74,12 +80,12 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
     };
 
     return (
-      <Stack spacing={0.75} sx={{ width: "100%", px: 0.75 }}>
+      <Stack spacing={0.75} sx={mobileContainerSx}>
         <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+          <Typography variant="caption" sx={emphasizedCaptionSx}>
             {t("rows-per-page")}
           </Typography>
-          <FormControl size="small" sx={{ minWidth: 90 }}>
+          <FormControl size="small" sx={mobileLimitControlSx}>
             <InputLabel id="todo-limit-mobile">{t("modal-limit")}</InputLabel>
             <Select
               labelId="todo-limit-mobile"
@@ -106,7 +112,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
             <NavigateBeforeIcon fontSize="small" />
           </IconButton>
 
-          <Typography variant="caption" sx={{ fontWeight: 600 }}>
+          <Typography variant="caption" sx={emphasizedCaptionSx}>
             {rangeLabel}
           </Typography>
 
@@ -124,7 +130,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   }
 
   return (
-    <Box display="flex" justifyContent="center" sx={{ width: "100%" }}>
+    <Box display="flex" justifyContent="center" sx={desktopContainerSx}>
       <TablePagination
         component="div"
         count={total}
