@@ -1,4 +1,4 @@
-import { styled } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import { Box } from "@mui/material";
 
 export const PageContainer = styled(Box)(({ theme }) => ({
@@ -6,8 +6,8 @@ export const PageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: "var(--background)",
-  color: "var(--text)",
+  backgroundColor: theme.palette.background.default,
+  color: theme.palette.text.primary,
   paddingTop: theme.spacing(6),
   paddingBottom: theme.spacing(6),
   paddingLeft: theme.spacing(2),
@@ -17,11 +17,11 @@ export const PageContainer = styled(Box)(({ theme }) => ({
 export const FormWrapper = styled("form")(({ theme }) => ({
   width: "100%",
   maxWidth: 420,
-  backgroundColor: "rgba(255, 255, 255, 0.08)",
-  border: "1px solid rgba(255, 255, 255, 0.18)",
+  backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.82 : 0.94),
+  border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.mode === "dark" ? 0.24 : 0.18)}`,
   backdropFilter: "blur(10px)",
   borderRadius: theme.spacing(1.5),
-  boxShadow: "0 18px 40px -25px rgba(0, 0, 0, 0.55)",
+  boxShadow: theme.shadows[8],
   display: "flex",
   flexDirection: "column",
   gap: theme.spacing(2.5),

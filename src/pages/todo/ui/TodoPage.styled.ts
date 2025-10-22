@@ -1,4 +1,4 @@
-import { styled } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import {
   Alert,
   Avatar,
@@ -41,9 +41,9 @@ export const ContentPaper = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",
-  backgroundColor: "var(--surface)",
-  border: "1px solid var(--border)",
-  color: "var(--text)",
+  backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.86 : 1),
+  border: `1px solid ${alpha(theme.palette.divider, 0.6)}`,
+  color: theme.palette.text.primary,
   transition: "all 0.4s ease-in-out",
   height: "auto",
   padding: theme.spacing(1.75),

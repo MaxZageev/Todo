@@ -1,4 +1,4 @@
-import { styled } from "@mui/material/styles";
+import { styled, alpha } from "@mui/material/styles";
 import {
   Avatar,
   Box,
@@ -34,7 +34,7 @@ export const ContentPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
   maxWidth: 800,
   width: "100%",
-  backgroundColor: "rgba(255,255,255,0.55)",
+  backgroundColor: alpha(theme.palette.background.paper, theme.palette.mode === "dark" ? 0.82 : 0.92),
   borderRadius: theme.spacing(2),
   backdropFilter: "blur(10px)",
   [theme.breakpoints.up("sm")]: {
@@ -63,7 +63,7 @@ export const ConfigPreview = styled("pre")(({ theme }) => ({
   marginTop: theme.spacing(1),
   padding: theme.spacing(2),
   borderRadius: theme.spacing(2),
-  backgroundColor: "rgba(0,0,0,0.04)",
+  backgroundColor: alpha(theme.palette.text.primary, theme.palette.mode === "dark" ? 0.12 : 0.04),
   overflowX: "auto",
   fontSize: "0.8rem",
   maxWidth: "100%",
@@ -83,13 +83,12 @@ export const ApiSourceText = styled(Typography)(({ theme }) => ({
   }
 }));
 
-export const ContactAvatar = styled(Avatar)(() => ({
-  backgroundColor: "#24A1DE"
+export const ContactAvatar = styled(Avatar)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText
 }));
 
-export const ContactIcon = styled(TelegramIcon)(() => ({
-  color: "white"
-}));
+export const ContactIcon = styled(TelegramIcon)(() => ({}));
 
 export const ActionButton = styled(Button)(({ theme }) => ({
   width: "100%",
